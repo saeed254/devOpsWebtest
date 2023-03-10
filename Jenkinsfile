@@ -22,12 +22,8 @@ pipeline{
             steps{
 
                 echo "Deployment"
+				bat 'copy StrictHostKeyChecking=no **/*.war root@${params.staging_server}:D:\\Gen\\Tom\\tom_test\\webapps\\'
             }
-		stage{
-			bat 'copy StrictHostKeyChecking=no **/*.war root@${params.staging_server}:D:\\Gen\\Tom\\tom_test\\webapps\\'
 		}
-        }
     }
 }
-    
-
