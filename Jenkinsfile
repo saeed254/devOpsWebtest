@@ -1,14 +1,15 @@
 pipeline{
-    agent {
-        label 'linuxagent'
+    agent any
+	parameters {
+         string(name: 'staging_server', defaultValue: '10.0.4.115', description: 'Remote Staging Server')
     }
-    tools{
-        maven 'local_maven'
+	tools{
+        maven 'maven'
     }
     stages{
         stage ('Build'){
             steps{
-                sh 'mvn clean package'
+                bat 'mvn clean package'
             }
             post{
                 success{
@@ -22,6 +23,11 @@ pipeline{
 
                 echo "Deployment"
             }
+		stage{
+			bat 'copy StrictHostKeyChecking=no **/*.war root@${params.staging_server}:D:\\Gen\\Tom\\tom_test\\webapps\\'
+		}
         }
     }
 }
+    
+
